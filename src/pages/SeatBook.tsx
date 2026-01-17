@@ -28,7 +28,7 @@ const SeatBook: React.FC = () => {
   const fetchShow = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000/show-times/${showtimeId}`,
+      const res = await axios.get(`/api/show-times/${showtimeId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -58,8 +58,8 @@ const SeatBook: React.FC = () => {
 
 
       const sectionData: Section[] = layout.map((layoutSection: any) => {
-        const layoutType = layoutSection.type; 
-        
+        const layoutType = layoutSection.type;
+
 
 
         const priceInfo = prices.find((p: any) => p.layoutType === layoutType);

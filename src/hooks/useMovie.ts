@@ -3,8 +3,6 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import type { Movie } from '../types';
 
-const BASE_URL = 'http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000';
-
 export function useMovie(movieId: string | undefined) {
     const [movie, setMovie] = useState<Movie | null>(null);
     const [loading, setLoading] = useState(false);
@@ -16,7 +14,7 @@ export function useMovie(movieId: string | undefined) {
             const token = localStorage.getItem('token');
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-            const res = await axios.get(`${BASE_URL}/movies/${movieId}`, { headers });
+            const res = await axios.get(`/api/movies/${movieId}`, { headers });
             setMovie(res.data);
         } catch (err) {
             console.error('Error fetching movie:', err);

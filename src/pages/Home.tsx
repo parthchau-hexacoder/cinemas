@@ -15,10 +15,11 @@ const Home = () => {
   const getData = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000/movies',
+      const token = localStorage.getItem('token'); // Get token from localStorage
+      const res = await axios.get('/api/movies',
         {
           headers: {
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAZ21haWwuY29tIiwiaWQiOiIxMzcxMmM5OC0zYmMyLTQzOTYtYjdjYy1iMTM4YTFjNWQ3OWYiLCJpYXQiOjE3NjgyMTU0NTYsImV4cCI6MTc2ODgyMDI1Nn0.kohhXSZXSNwZ4faQA-pAW72Hx9nChJFkbrAoJq2oE6g',
+            Authorization: `Bearer ${token}`, // Use token from localStorage
           },
         }
       )
@@ -41,16 +42,16 @@ const Home = () => {
     try {
       setLoadingTheaters(true);
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000/theaters',
+      const res = await axios.get('/api/theaters', // Changed URL back to /api/theaters as per original intent
         {
           headers: {
-            Authorization:
-              `Bearer ${token}`,
-          },
+            Authorization: `Bearer ${token}`
+          }
         }
       )
 
-      setTheater(res.data.data);
+
+      setTheater(res.data.data); // Corrected syntax and kept original state setter
     } catch (err) {
       console.error(err);
     } finally {

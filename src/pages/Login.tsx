@@ -29,7 +29,7 @@ const Login = () => {
 
         try {
             toast.loading("Logging in...", { id: "login" });
-            const res = await axios.post('http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000/auth/login',
+            const res = await axios.post('/api/auth/login',
                 {
                     email,
                     password,

@@ -59,7 +59,7 @@ const App = () => {
               <Payment />
             </ProtectedRoute>
           } />
-          <Route path="/success*" element={
+          <Route path="/success/*" element={
             <ProtectedRoute>
               <Success />
             </ProtectedRoute>

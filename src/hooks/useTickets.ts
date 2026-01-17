@@ -12,7 +12,7 @@ export function useTickets() {
             const token = localStorage.getItem("token");
 
             const res = await axios.get<Booking[]>(
-                "http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000/orders",
+                '/api/orders',
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

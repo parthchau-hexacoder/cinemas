@@ -3,8 +3,6 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import type { Show, Screen, Theater } from '../types';
 
-const BASE_URL = 'http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000';
-
 export function useTheaterShows(movieId: string | undefined) {
     const [shows, setShows] = useState<Show[]>([]);
     const [loading, setLoading] = useState(false);
@@ -16,11 +14,11 @@ export function useTheaterShows(movieId: string | undefined) {
             const token = localStorage.getItem('token');
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-            const screenRes = await axios.get(`${BASE_URL}/theaters/${theater.id}/screens`, { headers });
+            const screenRes = await axios.get(`/api/theaters/${theater.id}/screens`, { headers });
             const fetchedScreens: Screen[] = screenRes.data;
 
             const showtimePromises = fetchedScreens.map(screen =>
-                axios.get(`${BASE_URL}/screens/${screen.id}`, { headers })
+                axios.get(`/api/screens/${screen.id}`, { headers })
             );
             const responses = await Promise.all(showtimePromises);
 
