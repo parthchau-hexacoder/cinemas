@@ -173,7 +173,6 @@ const SeatBook: React.FC = () => {
 
   const buildSeatPayload = () => {
     if (!sections) return [];
-    console.log(sections)
 
     return selectedSeats.map((seatId) => {
       const row = seatId.charAt(0);

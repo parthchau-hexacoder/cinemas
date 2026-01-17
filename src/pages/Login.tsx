@@ -40,7 +40,6 @@ const Login = () => {
                     },
                 }
             );
-            console.log(res);
             let token = res.data.data.accessToken;
             if (!token) {
                 throw new Error("Token not received");
