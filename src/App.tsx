@@ -13,6 +13,7 @@ import Payment from './pages/Payment.tsx';
 import Success from './pages/Success.tsx';
 import Cancel from './pages/Cancel.tsx';
 import TicketList from './components/TicketList.tsx';
+import NotFound from './pages/NotFound.tsx';
 
 const App = () => {
 
@@ -69,6 +70,8 @@ const App = () => {
               <Cancel />
             </ProtectedRoute>
           } />
+
+          <Route path="*" element={<NotFound />} />
 
         </Routes>
       </div>

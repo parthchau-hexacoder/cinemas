@@ -13,9 +13,9 @@ interface Section {
 
 interface BookingState {
   seats: number;
-  show: Show;
-  theater: Theater;
-  date: string;
+  show?: Show;
+  theater?: Theater;
+  date?: string;
 }
 
 const SeatBook: React.FC = () => {
@@ -23,7 +23,10 @@ const SeatBook: React.FC = () => {
   const location = useLocation();
   const { showtimeId } = useParams();
 
-  const state = location.state as BookingState | null;
+  const state: BookingState = location.state ?? {
+    seats: 1,
+  };
+
 
   const fetchShow = async () => {
     try {
