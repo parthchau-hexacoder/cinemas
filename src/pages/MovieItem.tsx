@@ -84,12 +84,12 @@ const MovieItem = () => {
     }, [theaterShows, selectedDate]);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 p-8">
-            <div className="col-span-3 pt-8">
+        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 p-4 md:p-8">
+            <div className="lg:col-span-3 pt-4 md:pt-8 w-full order-2 lg:order-1">
                 <button
                     onClick={() => navigate(-1)}
-                    className="text-xl text-gray-500 font-semibold flex text-center mb-4 cursor-pointer p-2">
-                    <ArrowLeftFromLine size={32} />
+                    className="text-lg md:text-xl text-gray-500 font-semibold flex items-center mb-6 cursor-pointer p-2 hover:text-blue-600 transition-colors">
+                    <ArrowLeftFromLine size={28} className="mr-2" />
                     Back
                 </button>
 
@@ -114,13 +114,15 @@ const MovieItem = () => {
                 />
             </div>
 
-            <MovieDetails
-                movie={movie}
-                activeTheater={activeTheater}
-                selectedDate={selectedDate}
-                activeShow={activeShow}
-                onBookNow={() => setShowSeatModal(true)}
-            />
+            <div className="lg:col-span-2 w-full order-1 lg:order-2">
+                <MovieDetails
+                    movie={movie}
+                    activeTheater={activeTheater}
+                    selectedDate={selectedDate}
+                    activeShow={activeShow}
+                    onBookNow={() => setShowSeatModal(true)}
+                />
+            </div>
 
             <SeatCountModal
                 open={showSeatModal}

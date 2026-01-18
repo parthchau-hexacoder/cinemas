@@ -15,9 +15,9 @@ const MovieCards = ({ movies }: MovieCardProps) => {
   }
 
   return (
-    <div className="mt-8 grid grid-cols-4 gap-12">
+    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-12">
       {movies.length === 0 && (
-        <div className="col-span-4 py-10 text-center">
+        <div className="col-span-full py-10 text-center">
           <p className="text-xl text-gray-500">No movies found</p>
         </div>
       )}

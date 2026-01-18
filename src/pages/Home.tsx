@@ -15,11 +15,11 @@ const Home = () => {
   const getData = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token'); // Get token from localStorage
+      const token = localStorage.getItem('token');
       const res = await axios.get('/api/movies',
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Use token from localStorage
+            Authorization: `Bearer ${token}`,
           },
         }
       )
@@ -42,7 +42,7 @@ const Home = () => {
     try {
       setLoadingTheaters(true);
       const token = localStorage.getItem('token');
-      const res = await axios.get('/api/theaters', // Changed URL back to /api/theaters as per original intent
+      const res = await axios.get('/api/theaters',
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -51,7 +51,7 @@ const Home = () => {
       )
 
 
-      setTheater(res.data.data); // Corrected syntax and kept original state setter
+      setTheater(res.data.data);
     } catch (err) {
       console.error(err);
     } finally {
@@ -65,22 +65,22 @@ const Home = () => {
   return (
     <div className="">
 
-      <div className="px-40 pt-8">
-        <h1 className="text-5xl font-bold text-blue-600 mb-6">
+      <div className="px-6 md:px-10 lg:px-20 xl:px-40 pt-8 pb-10">
+        <h1 className="text-3xl md:text-5xl font-bold text-blue-600 mb-6 text-center md:text-left">
           Now Showing
         </h1>
 
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-6 mb-8">
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`
-                px-8 py-2 rounded-2xl text-lg font-medium
-                transition-all duration-150 cursor-pointer
+                px-6 md:px-8 py-2 rounded-2xl text-base md:text-lg font-medium
+                transition-all duration-150 cursor-pointer flex-1 md:flex-none
                 ${activeTab === tab
-                  ? "bg-blue-600 text-white  shadow-md"
-                  : "text-blue-600  hover:bg-blue-50"
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "text-blue-600 hover:bg-blue-50"
                 }
               `}
             >
