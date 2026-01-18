@@ -19,7 +19,6 @@ const Login = () => {
     }
 
     const handleLogin = async () => {
-        // e.preventDefault();
         const { valid, errors } = validateLogin({ email, password });
         if (!valid) {
             const firstError = Object.values(errors)[0];
@@ -71,12 +70,12 @@ const Login = () => {
             </div>
 
 
-            <div className="flex items-center justify-center px-6">
+            <div className="flex items-center justify-center px-6 py-12 md:py-0">
                 <div className="w-full max-w-md">
-                    <h2 className="text-3xl font-semibold mb-8">Login to your account</h2>
+                    <h2 className="text-2xl md:text-3xl font-semibold mb-6 md:mb-8 text-center md:text-left">Login to your account</h2>
 
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-4">
                         <div>
                             <label className="block text-sm mb-1 text-gray-600">Email</label>
                             <input
@@ -84,7 +83,7 @@ const Login = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Enter Your Email"
-                                className="w-full rounded-2xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full rounded-2xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
 
@@ -97,14 +96,14 @@ const Login = () => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Enter Password"
-                                    className="w-full rounded-2xl border border-gray-300 px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    className="w-full rounded-2xl border border-gray-300 px-4 py-2.5 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition-all duration-150 ease-in"
                                 >
-                                    {showPassword ? <Eye /> : <EyeClosed />}
+                                    {showPassword ? <Eye size={20} /> : <EyeClosed size={20} />}
                                 </button>
                             </div>
                         </div>
@@ -112,17 +111,17 @@ const Login = () => {
 
                         <button
                             onClick={handleLogin}
-                            className="w-full text-lg mt-2  bg-blue-600 text-white py-2 rounded-2xl font-medium hover:bg-blue-100 hover:text-blue-600 transition-all duration-150 ease-in cursor-pointer"
+                            className="w-full text-lg mt-4 bg-blue-600 text-white py-2.5 rounded-2xl font-medium hover:bg-blue-100 hover:text-blue-600 transition-all duration-150 ease-in cursor-pointer shadow-sm"
                         >
                             Login
                         </button>
 
 
                     </div>
-                    <p className="text-sm text-center text-gray-400 mt-6">
+                    <p className="text-sm text-center text-gray-400 mt-8">
                         Don&apos;t Have An Account?{" "}
                         <button
-                            className="text-blue-500 hover:underline"
+                            className="text-blue-500 hover:underline font-medium"
                             onClick={() => navigate('/signup')}
                         >
                             Register Here

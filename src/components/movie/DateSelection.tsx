@@ -12,7 +12,7 @@ export default function DateSelection({ availableDates, selectedDate, onDateSele
                 Available Dates
             </h2>
 
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-9 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:gird-cols-8 gap-4">
                 {availableDates.length > 0 ? (
                     availableDates.map(date => {
                         const d = new Date(date);

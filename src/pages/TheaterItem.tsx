@@ -70,18 +70,18 @@ export default function TheaterItem() {
 
   return (
     <div className="min-h-screen pb-20">
-      <div className="pl-40 border-b shadow-sm">
-        <div className="px-4 py-4 flex gap-4">
+      <div className="px-6 md:px-10 lg:px-20 xl:pl-40 border-b shadow-sm bg-white">
+        <div className="py-4 md:py-6 flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="text-gray-600 transition-colors hover:text-sky-600 cursor-pointer"
+            className="text-gray-600 transition-colors hover:text-sky-600 cursor-pointer p-1"
           >
-            <ArrowLeft className="h-full transition-transform group-hover:-translate-x-1" />
+            <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-blue-600">{currentTheater?.name}</h1>
-            <div className=" text-xs text-gray-500 flex gap-1">
-              <MapPin className="h-3 w-3" />
+            <h1 className="text-xl md:text-3xl font-bold text-blue-600 leading-tight">{currentTheater?.name}</h1>
+            <div className="text-[10px] md:text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+              <MapPin className="h-2.5 md:h-3.5 w-2.5 md:h-3.5" />
               <span>{currentTheater?.location}</span>
             </div>
           </div>

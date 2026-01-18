@@ -13,7 +13,7 @@ export default function TheaterCard({ theater, onClick }: TheaterCardProps) {
             className="
               w-full rounded-2xl border border-gray-300 bg-linear-to-r from-white to-sky-100 px-6 py-5
               flex items-center justify-between
-              cursor-pointer m-4
+              cursor-pointer my-4
               transition-all duration-150 ease-in hover:-translate-y-1
               hover:shadow-md
             "
