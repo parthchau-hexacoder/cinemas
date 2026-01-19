@@ -35,7 +35,7 @@ const MovieItem = () => {
         await fetchTheaterShows(inTheater);
     };
 
-    // Update selected date when shows change
+
     useEffect(() => {
         const availableDates = getAvailableDates(theaterShows);
         if (availableDates.length > 0) {
@@ -60,14 +60,14 @@ const MovieItem = () => {
 
     return (
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 p-4 md:p-8">
-            <div className="lg:col-span-3 pt-4 md:pt-8 w-full order-2 lg:order-1">
-                <button
-                    onClick={() => navigate(-1)}
-                    className="text-lg md:text-xl text-gray-500 font-semibold flex items-center mb-6 cursor-pointer p-2 hover:text-blue-600 transition-colors">
-                    <ArrowLeftFromLine size={28} className="mr-2" />
-                    Back
-                </button>
+            <button
+                onClick={() => navigate(-1)}
+                className="lg:col-span-3 text-lg md:text-xl text-gray-500 font-semibold flex items-center mb-0 cursor-pointer p-2 hover:text-blue-600 transition-colors order-1 lg:order-1 lg:mb-6">
+                <ArrowLeftFromLine size={28} className="mr-2" />
+                Back
+            </button>
 
+            <div className="lg:col-span-3 w-full order-3 lg:order-2">
                 <DateSelection
                     availableDates={availableDates}
                     selectedDate={selectedDate}
@@ -89,7 +89,7 @@ const MovieItem = () => {
                 />
             </div>
 
-            <div className="lg:col-span-2 w-full order-1 lg:order-2">
+            <div className="lg:col-span-2 w-full order-2 lg:order-3 lg:row-span-2 lg:col-start-4 lg:row-start-1">
                 <MovieDetails
                     movie={movie}
                     activeTheater={activeTheater}
