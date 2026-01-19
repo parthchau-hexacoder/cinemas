@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import axios from "axios";
+import { authService } from "../api/services/auth.service";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeClosed } from "lucide-react";
 import { validateLogin } from "../utils/validator";
@@ -28,24 +28,16 @@ const Login = () => {
 
         try {
             toast.loading("Logging in...", { id: "login" });
-            const res = await axios.post('/api/auth/login',
-                {
-                    email,
-                    password,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            let token = res.data.data.accessToken;
+            const res = await authService.login({ email, password });
+
+            let token = res.data?.accessToken;
+            if (!token && (res as any).accessToken) token = (res as any).accessToken;
+
             if (!token) {
                 throw new Error("Token not received");
             }
-            login({
-                email,
-            }, token)
+
+            login({ email }, token);
 
             toast.success("Login successful!", { id: "login" });
             navigate('/');

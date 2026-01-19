@@ -1,8 +1,8 @@
-import type { Booking } from "../../types";
+import type { Order } from "../../types";
 import { downloadTicket } from "../../utils/downloadTicket";
 
 interface TicketCardProps {
-    booking: Booking;
+    booking: Order;
 }
 
 export default function TicketCard({ booking }: TicketCardProps) {
@@ -19,9 +19,9 @@ export default function TicketCard({ booking }: TicketCardProps) {
             minute: "2-digit",
         });
 
-    const formatSeats = (booking: Booking) =>
+    const formatSeats = (booking: Order) =>
         booking.seatData.seats
-            .map((s) => `${s.row}${s.column}`)
+            .map((s: any) => `${s.row}${s.column}`)
             .join(", ");
 
     return (

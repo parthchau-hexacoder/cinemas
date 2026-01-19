@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useAuth } from "../hooks/useAuth";
-import axios from "axios";
+import { authService } from "../api/services/auth.service";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeClosed } from "lucide-react";
 import { validateSignup } from "../utils/validator";
@@ -38,39 +38,18 @@ const Signup = () => {
 
         try {
             toast.loading("Creating account...", { id: "signup" });
-            let res = await axios.post('http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000/auth/signup',
-                {
-                    firstName,
-                    lastName,
-                    email,
-                    password,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            await authService.signup({ firstName, lastName, email, password });
 
-            res = await axios.post('/api/auth/login',
-                {
-                    email,
-                    password,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            const res = await authService.login({ email, password });
 
-            let token = res.data.data.accessToken;
+            // @ts-ignore
+            let token = res.data?.accessToken || res.data?.data?.accessToken;
+            if (!token && (res as any).accessToken) token = (res as any).accessToken;
+
             if (!token) {
                 throw new Error("Token not received");
             }
-            login({
-                email,
-            }, token)
+            login({ email }, token);
 
             toast.success("Account created successfully!", { id: "signup" });
             navigate('/');

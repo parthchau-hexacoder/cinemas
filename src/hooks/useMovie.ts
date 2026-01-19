@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
-import axios from 'axios';
 import toast from 'react-hot-toast';
+import { movieService } from '../api/services/movie.service';
 import type { Movie } from '../types';
 
 export function useMovie(movieId: string | undefined) {
@@ -11,10 +11,7 @@ export function useMovie(movieId: string | undefined) {
         if (!movieId) return;
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
-            const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
-            const res = await axios.get(`/api/movies/${movieId}`, { headers });
+            const res = await movieService.getById(movieId);
             setMovie(res.data);
         } catch (err) {
             console.error('Error fetching movie:', err);

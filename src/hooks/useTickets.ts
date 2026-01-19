@@ -1,25 +1,16 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import type { Booking } from '../types';
+import { bookingService } from '../api/services/booking.service';
+import type { Order } from '../types'; // Update type import if Order is used
 
 export function useTickets() {
-    const [tickets, setTickets] = useState<Booking[]>([]);
+    const [tickets, setTickets] = useState<Order[]>([]);
     const [loading, setLoading] = useState(false);
 
     const loadTickets = async () => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
-
-            const res = await axios.get<Booking[]>(
-                '/api/orders',
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
+            setLoading(true);
+            const res = await bookingService.getOrders();
             setTickets(res.data);
         } catch (err) {
             console.error("Failed to load tickets", err);

@@ -1,7 +1,7 @@
 import { jsPDF } from "jspdf";
-import type { Booking } from "../types";
+import type { Order } from "../types";
 
-export const downloadTicket = (booking: Booking) => {
+export const downloadTicket = (booking: Order) => {
   const doc = new jsPDF();
 
   const startY = 20;

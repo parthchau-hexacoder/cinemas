@@ -12,7 +12,7 @@ export default function TicketList() {
         return tickets.filter((t) => {
             const showTime = new Date(t.showtime.startTime);
             return activeTab === "upcoming"
-                ? showTime >= now
+                ? showTime >= now && t.status === 'COMPLETED'
                 : showTime < now;
         });
     }, [tickets, activeTab]);
