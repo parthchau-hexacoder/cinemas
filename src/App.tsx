@@ -1,7 +1,7 @@
 import Home from './pages/Home.tsx'
 import { Toaster } from 'react-hot-toast';
 import { LoaderProvider } from './context/LoaderContext';
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Outlet } from "react-router-dom";
 import Navbar from './components/Navbar.tsx';
 import MovieItem from './pages/MovieItem.tsx';
 import Login from './pages/Login.tsx'
@@ -28,55 +28,26 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-          />
-          <Route path="/ticket" element={
-            <ProtectedRoute>
-              <TicketList />
-            </ProtectedRoute>
-          } />
-          <Route path="/movie/:movieId" element={
-            <ProtectedRoute>
-              <MovieItem />
-            </ProtectedRoute>
-          } />
 
-          <Route path="/theater/:theaterId" element={
+          <Route element={
             <ProtectedRoute>
-              <TheaterItem />
+              <Outlet />
             </ProtectedRoute>
-          } />
-          <Route path="/book/:showtimeId" element={
-            <ProtectedRoute>
-              <SeatBook />
-            </ProtectedRoute>
-          } />
-          <Route path="/payment" element={
-            <ProtectedRoute>
-              <Payment />
-            </ProtectedRoute>
-          } />
-          <Route path="/success/*" element={
-            <ProtectedRoute>
-              <Success />
-            </ProtectedRoute>
-          } />
-          <Route path="/cancel" element={
-            <ProtectedRoute>
-              <Cancel />
-            </ProtectedRoute>
-          } />
-
+          }>
+            <Route path="/" element={<Home />} />
+            <Route path="/ticket" element={<TicketList />} />
+            <Route path="/movie/:movieId" element={<MovieItem />} />
+            <Route path='/theater/:theaterId' element={<TheaterItem />} />
+            <Route path="/book/:showtimeId" element={<SeatBook />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/success/*" element={<Success />} />
+            <Route path="/cancel" element={<Cancel />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
 
         </Routes>
       </div>
     </LoaderProvider>
-
   )
 }
 
