@@ -30,10 +30,12 @@ const Login = () => {
             toast.loading("Logging in...", { id: "login" });
             const res = await authService.login({ email, password });
 
-            let token = res.data?.accessToken;
-            if (!token && (res as any).accessToken) token = (res as any).accessToken;
+            console.log("Login response:", res);
+            // @ts-ignore
+            let token = res.data?.data.accessToken;
 
             if (!token) {
+                console.error("Token extraction failed. Response data:", res.data);
                 throw new Error("Token not received");
             }
 
