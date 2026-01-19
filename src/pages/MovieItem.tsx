@@ -10,10 +10,7 @@ import TheaterSelection from '../components/movie/TheaterSelection';
 import ShowtimeSelection from '../components/movie/ShowtimeSelection';
 import MovieDetails from '../components/movie/MovieDetails';
 
-const formatDateToISO = (dateInput: string | Date): string => {
-    const date = new Date(dateInput);
-    return date.toISOString().split('T')[0];
-};
+import { getAvailableDates, isSameDay } from '../utils/dateUtils';
 
 const MovieItem = () => {
     const { movieId } = useParams<{ movieId: string }>();
@@ -40,46 +37,24 @@ const MovieItem = () => {
 
     // Update selected date when shows change
     useEffect(() => {
-        if (theaterShows.length > 0) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            const dates = theaterShows
-                .filter(show => {
-                    const showDate = new Date(show.startTime);
-                    showDate.setHours(0, 0, 0, 0);
-                    return showDate.getTime() >= today.getTime();
-                })
-                .map(show => formatDateToISO(show.startTime));
-
-            const uniqueDates = Array.from(new Set(dates)).sort();
-            if (uniqueDates.length > 0) {
-                setSelectedDate(uniqueDates[0]);
-            } else {
-                setSelectedDate('');
-            }
+        const availableDates = getAvailableDates(theaterShows);
+        if (availableDates.length > 0) {
+            setSelectedDate(availableDates[0].toDateString());
+        } else {
+            setSelectedDate('');
         }
     }, [theaterShows]);
 
     const availableDates = useMemo(() => {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const dates = theaterShows
-            .filter(show => {
-                const showDate = new Date(show.startTime);
-                showDate.setHours(0, 0, 0, 0);
-                return showDate.getTime() >= today.getTime();
-            })
-            .map(show => formatDateToISO(show.startTime));
-
-        return Array.from(new Set(dates)).sort();
+        const dates = getAvailableDates(theaterShows);
+        return dates.map(d => d.toDateString());
     }, [theaterShows]);
 
 
     const filteredShowtimes = useMemo(() => {
+        if (!selectedDate) return [];
         return theaterShows.filter(show => {
-            return formatDateToISO(show.startTime) === selectedDate;
+            return isSameDay(show.startTime, selectedDate);
         });
     }, [theaterShows, selectedDate]);
 
