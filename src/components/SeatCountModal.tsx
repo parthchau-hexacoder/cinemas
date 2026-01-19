@@ -23,14 +23,14 @@ const SeatCountModal: React.FC<SeatCountModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white w-[90%] max-w-lg rounded-3xl p-8 shadow-2xl">
-        {/* Title */}
-        <h2 className="text-3xl font-bold text-sky-500 text-center mb-8">
+      <div className="bg-white w-[95%] max-w-lg rounded-3xl p-6 md:p-8 shadow-2xl">
+
+        <h2 className="text-2xl md:text-3xl font-bold text-sky-500 text-center mb-6 md:mb-8">
           How many seats?
         </h2>
 
-        {/* Seat grid */}
-        <div className="grid grid-cols-5 gap-5 justify-items-center mb-10">
+
+        <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 sm:gap-5 justify-items-center mb-8 md:mb-10">
           {Array.from({ length: 10 }, (_, i) => {
             const value = i + 1;
             const disabled = value > maxSeats;
@@ -42,14 +42,13 @@ const SeatCountModal: React.FC<SeatCountModalProps> = ({
                 disabled={disabled}
                 onClick={() => setSelected(value)}
                 className={`
-                  w-16 h-16 rounded-xl border-2 text-lg font-semibold
+                  w-12 h-12 sm:w-16 sm:h-16 rounded-xl border-2 text-base sm:text-lg font-semibold
                   transition-all
-                  ${
-                    active
-                      ? 'border-sky-500 text-sky-500'
-                      : 'border-gray-300 text-gray-600'
+                  ${active
+                    ? 'border-sky-500 text-sky-500'
+                    : 'border-gray-300 text-gray-600'
                   }
-                  ${disabled ? 'opacity-40 cursor-not-allowed' : 'hover:border-sky-400'}
+                  ${disabled ? 'opacity-40 cursor-not-allowed' : 'hover:border-sky-400 cursor-pointer'}
                 `}
               >
                 {value}
@@ -58,11 +57,11 @@ const SeatCountModal: React.FC<SeatCountModalProps> = ({
           })}
         </div>
 
-        {/* Actions */}
-        <div className="flex gap-4">
+
+        <div className="flex flex-col sm:flex-row gap-4">
           <button
             onClick={onClose}
-            className="flex-1 rounded-xl border border-gray-300 py-3 text-gray-600"
+            className="flex-1 rounded-xl border border-gray-300 py-3 text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -72,10 +71,9 @@ const SeatCountModal: React.FC<SeatCountModalProps> = ({
             onClick={() => selected && onConfirm(selected)}
             className={`
               flex-1 rounded-xl py-3 font-semibold transition
-              ${
-                selected
-                  ? 'border border-sky-500 text-sky-500 hover:bg-blue-400 hover:text-white cursor-pointer hover:scale-105 transition-all duration-150 ease-in'
-                  : 'border border-gray-300 text-gray-300 cursor-not-allowed'
+              ${selected
+                ? 'bg-sky-500 text-white hover:bg-sky-600 cursor-pointer hover:scale-[1.02] shadow-md shadow-sky-100'
+                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
               }
             `}
           >

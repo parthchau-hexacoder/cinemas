@@ -63,7 +63,7 @@ const Signup = () => {
                     },
                 }
             );
-            // console.log(res);
+
             let token = res.data.data.accessToken;
             if (!token) {
                 throw new Error("Token not received");
@@ -96,36 +96,38 @@ const Signup = () => {
             </div>
 
 
-            <div className="flex items-center justify-center px-6">
+            <div className="flex items-center justify-center px-6 py-12 md:py-0">
                 <div className="w-full max-w-md">
-                    <h2 className="text-3xl font-semibold mb-8">Register Here</h2>
+                    <h2 className="text-2xl md:text-3xl font-semibold mb-6 md:mb-8 text-center md:text-left">Register Here</h2>
 
                     <form
-                        className="space-y-5"
+                        className="space-y-4"
                         onSubmit={(e) => {
                             handleSignup(e)
                         }}
                     >
-                        <div>
-                            <label className="block text-sm mb-1 text-gray-600">First Name</label>
-                            <input
-                                type="text"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                                placeholder="Enter Your First Name"
-                                className="w-full rounded-2xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            />
-                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm mb-1 text-gray-600">First Name</label>
+                                <input
+                                    type="text"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    placeholder="First Name"
+                                    className="w-full rounded-2xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
 
-                        <div>
-                            <label className="block text-sm mb-1 text-gray-600">Last Name</label>
-                            <input
-                                type="text"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                                placeholder="Enter Your Last Name"
-                                className="w-full rounded-2xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            />
+                            <div>
+                                <label className="block text-sm mb-1 text-gray-600">Last Name</label>
+                                <input
+                                    type="text"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    placeholder="Last Name"
+                                    className="w-full rounded-2xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
                         </div>
 
                         <div>
@@ -135,7 +137,7 @@ const Signup = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Enter Your Email"
-                                className="w-full rounded-2xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full rounded-2xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
 
@@ -148,14 +150,14 @@ const Signup = () => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Enter Password"
-                                    className="w-full rounded-2xl border border-gray-300 px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    className="w-full rounded-2xl border border-gray-300 px-4 py-2.5 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
                                 >
-                                    {showPassword ? <Eye /> : <EyeClosed />}
+                                    {showPassword ? <Eye size={20} /> : <EyeClosed size={20} />}
                                 </button>
                             </div>
                         </div>
@@ -163,17 +165,17 @@ const Signup = () => {
 
                         <button
                             type="submit"
-                            className="w-full text-lg mt-2  bg-blue-600 text-white py-2 rounded-2xl font-medium hover:bg-blue-100 hover:text-blue-600 transition-all duration-150 ease-in cursor-pointer"
+                            className="w-full text-lg mt-4 bg-blue-600 text-white py-2.5 rounded-2xl font-medium hover:bg-blue-100 hover:text-blue-600 transition-all duration-150 ease-in cursor-pointer shadow-sm"
                         >
                             Sign Up
                         </button>
                     </form>
 
 
-                    <p className="text-sm text-center text-gray-400 mt-6">
+                    <p className="text-sm text-center text-gray-400 mt-8">
                         Already Have An Account?{" "}
                         <a
-                            className="text-blue-500 hover:underline cursor-pointer"
+                            className="text-blue-500 hover:underline cursor-pointer font-medium"
                             onClick={() => navigate('/login')}
                         >
                             Login Here
