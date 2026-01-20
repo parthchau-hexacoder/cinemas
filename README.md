@@ -1,4 +1,4 @@
-# Cine# Cinemas - Modern Cinema Booking Application
+# Cinemas - Modern Cinema Booking Application
 
 ![Cinemas Logo](./public/logo.png)
 
