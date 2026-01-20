@@ -24,9 +24,7 @@ const SeatBook: React.FC = () => {
 
   const { sections, excludedSeats, bookedSeats, loading, show, error } = useSeatBooking(showtimeId);
 
-  if (error) {
-    return <Navigate to="/404" />;
-  }
+
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
 
   const toggleSeat = (seatId: string) => {
@@ -95,6 +93,12 @@ const SeatBook: React.FC = () => {
       },
     });
   };
+
+
+
+  if (error) {
+    return <Navigate to="/404" />;
+  }
 
   return (
     <div className="min-h-screen w-full p-4 md:p-8 font-sans text-gray-700 bg-linear-to-r from-sky-200 via-sky-50 to-sky-200">

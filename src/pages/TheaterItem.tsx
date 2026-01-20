@@ -16,9 +16,7 @@ export default function TheaterItem() {
 
   const { movies, shows, loading, error } = useTheaterDetails(theaterId);
 
-  if (error) {
-    return <Navigate to="/404" />;
-  }
+
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedShowId, setSelectedShowId] = useState<string | null>(null);
   const [showSeatModal, setShowSeatModal] = useState(false);
@@ -68,6 +66,12 @@ export default function TheaterItem() {
       },
     });
   };
+
+
+
+  if (error) {
+    return <Navigate to="/404" />;
+  }
 
   if (loading) {
     return <Loader text="Loading theater details..." />;

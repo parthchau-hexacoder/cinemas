@@ -19,9 +19,7 @@ const MovieItem = () => {
     const { movie, error } = useMovie(movieId);
     const { shows: theaterShows, loading: showsLoading, fetchTheaterShows } = useTheaterShows(movieId);
 
-    if (error) {
-        return <Navigate to="/404" />;
-    }
+
 
     const [selectedDate, setSelectedDate] = useState<string>('');
     const [activeShow, setActiveShow] = useState<Show>();
@@ -69,6 +67,10 @@ const MovieItem = () => {
             })
             .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
     }, [theaterShows, selectedDate]);
+
+    if (error) {
+        return <Navigate to="/404" />;
+    }
 
     return (
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 p-4 md:p-8">
