@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import MovieCards from '../components/MovieCards'
 import TheaterList from "../components/TheaterList";
-import axios from "axios";
+import { movieService } from "../api/services/movie.service";
+import { theaterService } from "../api/services/theater.service";
 import type { Movie, Theater } from "../types";
 
 const Home = () => {
@@ -15,15 +16,8 @@ const Home = () => {
   const getData = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-      const res = await axios.get('/api/movies',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      setMovies(res.data);
+      const res: any = await movieService.getAll();
+      setMovies(res.data?.data || res.data || []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -41,17 +35,8 @@ const Home = () => {
   const getTheaterData = async () => {
     try {
       setLoadingTheaters(true);
-      const token = localStorage.getItem('token');
-      const res = await axios.get('/api/theaters',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
-
-
-      setTheater(res.data.data);
+      const res: any = await theaterService.getAll();
+      setTheater(res.data?.data || res.data || []);
     } catch (err) {
       console.error(err);
     } finally {

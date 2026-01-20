@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import axios from 'axios';
 import toast from 'react-hot-toast';
+import { theaterService } from '../api/services/theater.service';
 import type { Show, Screen, Theater } from '../types';
 
 export function useTheaterShows(movieId: string | undefined) {
@@ -11,19 +11,16 @@ export function useTheaterShows(movieId: string | undefined) {
         if (!movieId) return;
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
-            const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
-            const screenRes = await axios.get(`/api/theaters/${theater.id}/screens`, { headers });
-            const fetchedScreens: Screen[] = screenRes.data;
+            const screenRes = await theaterService.getScreens(theater.id);
+            const fetchedScreens: Screen[] = (screenRes.data as any) || [];
 
             const showtimePromises = fetchedScreens.map(screen =>
-                axios.get(`/api/screens/${screen.id}`, { headers })
+                theaterService.getScreenDetails(screen.id)
             );
             const responses = await Promise.all(showtimePromises);
 
             const allShows: Show[] = responses.flatMap(
-                res => res.data.data.screen.showTimes
+                res => (res.data as any)?.data?.screen?.showTimes ?? (res.data as any)?.screen?.showTimes ?? []
             );
             const movieShows = allShows.filter(
                 show => show.movieId === movieId

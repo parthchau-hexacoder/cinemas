@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import type { Show, Theater } from '../types';
 import SeatCountModal from '../components/SeatCountModal';
 import { ArrowLeftFromLine } from 'lucide-react';
@@ -16,8 +16,12 @@ const MovieItem = () => {
     const { movieId } = useParams<{ movieId: string }>();
     const navigate = useNavigate();
 
-    const { movie } = useMovie(movieId);
+    const { movie, error } = useMovie(movieId);
     const { shows: theaterShows, loading: showsLoading, fetchTheaterShows } = useTheaterShows(movieId);
+
+    if (error) {
+        return <Navigate to="/404" />;
+    }
 
     const [selectedDate, setSelectedDate] = useState<string>('');
     const [activeShow, setActiveShow] = useState<Show>();
@@ -45,6 +49,10 @@ const MovieItem = () => {
         }
     }, [theaterShows]);
 
+    useEffect(() => {
+        setActiveShow(undefined);
+    }, [selectedDate]);
+
     const availableDates = useMemo(() => {
         const dates = getAvailableDates(theaterShows);
         return dates.map(d => d.toDateString());
@@ -53,9 +61,13 @@ const MovieItem = () => {
 
     const filteredShowtimes = useMemo(() => {
         if (!selectedDate) return [];
-        return theaterShows.filter(show => {
-            return isSameDay(show.startTime, selectedDate);
-        });
+        const now = new Date();
+        return theaterShows
+            .filter(show => {
+                const showDate = new Date(show.startTime);
+                return isSameDay(show.startTime, selectedDate) && showDate > now;
+            })
+            .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
     }, [theaterShows, selectedDate]);
 
     return (

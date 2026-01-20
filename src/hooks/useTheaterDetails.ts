@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import toast from 'react-hot-toast';
+import { theaterService } from '../api/services/theater.service';
 import type { Movie, Screen, Show } from '../types';
 
 export function useTheaterDetails(theaterId: string | undefined) {
@@ -8,19 +8,20 @@ export function useTheaterDetails(theaterId: string | undefined) {
     const [shows, setShows] = useState<Show[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const [error, setError] = useState(false);
+
     const fetchTheater = async () => {
         if (!theaterId) return;
 
         setLoading(true);
+        setError(false);
         try {
-            const token = localStorage.getItem('token');
-            const headers = { Authorization: `Bearer ${token}` };
+            const moviesRes: any = await theaterService.getMovies(theaterId);
+            console.log(moviesRes)
+            setMovies(moviesRes.data?.data.movies ?? []);
 
-            const moviesRes = await axios.get(`/api/theaters/${theaterId}/movies`, { headers });
-            setMovies(moviesRes.data?.data?.movies ?? []);
-
-            const screensRes = await axios.get(`/api/theaters/${theaterId}/screens`, { headers });
-            const fetchedScreens: Screen[] = screensRes.data ?? [];
+            const screensRes = await theaterService.getScreens(theaterId);
+            const fetchedScreens: Screen[] = (screensRes.data as any) ?? [];
 
             if (!fetchedScreens.length) {
                 setLoading(false);
@@ -28,17 +29,19 @@ export function useTheaterDetails(theaterId: string | undefined) {
             }
 
             const screenRequests = fetchedScreens.map((screen) =>
-                axios.get(`/api/screens/${screen.id}`, { headers })
+                theaterService.getScreenDetails(screen.id)
             );
 
             const responses = await Promise.all(screenRequests);
             const aggregatedShows = responses.flatMap(
-                (res) => res.data?.data?.screen?.showTimes ?? []
+                (res) => (res.data as any)?.data.screen?.showTimes ?? []
             );
+            console.log(aggregatedShows);
 
             setShows(aggregatedShows);
         } catch (err) {
             console.error('Error fetching theater:', err);
+            setError(true);
             toast.error("Failed to load theater details");
         } finally {
             setLoading(false);
@@ -49,5 +52,5 @@ export function useTheaterDetails(theaterId: string | undefined) {
         fetchTheater();
     }, [theaterId]);
 
-    return { movies, shows, loading, refresh: fetchTheater };
+    return { movies, shows, loading, error, refresh: fetchTheater };
 }

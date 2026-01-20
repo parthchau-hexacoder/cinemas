@@ -10,7 +10,7 @@ export const getAvailableDates = (shows: Show[]): Date[] => {
         const dateToCheck = new Date(d);
         dateToCheck.setHours(0, 0, 0, 0);
 
-        if (dateToCheck.getTime() >= today.getTime()) {
+        if (d.getTime() >= new Date().getTime()) {
             const key = d.toDateString();
             if (!map.has(key)) map.set(key, d);
         }
