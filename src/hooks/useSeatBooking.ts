@@ -17,9 +17,12 @@ export function useSeatBooking(showtimeId: string | undefined) {
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState<Show | null>(null);
 
+    const [error, setError] = useState(false);
+
     const fetchShow = useCallback(async () => {
         if (!showtimeId) return;
         setLoading(true);
+        setError(false);
         try {
             const res: any = await bookingService.getShowById(showtimeId);
             const showData = res.data.data;
@@ -92,6 +95,7 @@ export function useSeatBooking(showtimeId: string | undefined) {
 
         } catch (err: any) {
             console.error('=== Error Fetching Show ===', err);
+            setError(true);
             toast.error("Failed to load seat layout");
         } finally {
             setLoading(false);
@@ -102,5 +106,5 @@ export function useSeatBooking(showtimeId: string | undefined) {
         fetchShow();
     }, [fetchShow]);
 
-    return { sections, excludedSeats, bookedSeats, loading, show, refresh: fetchShow };
+    return { sections, excludedSeats, bookedSeats, loading, show, error, refresh: fetchShow };
 }

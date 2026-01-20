@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, Navigate } from 'react-router-dom';
 import { useSeatBooking } from '../hooks/useSeatBooking';
 import SeatHeader from '../components/booking/SeatHeader';
 import SeatLayout from '../components/booking/SeatLayout';
@@ -22,7 +22,11 @@ const SeatBook: React.FC = () => {
     seats: 1,
   };
 
-  const { sections, excludedSeats, bookedSeats, loading, show } = useSeatBooking(showtimeId);
+  const { sections, excludedSeats, bookedSeats, loading, show, error } = useSeatBooking(showtimeId);
+
+  if (error) {
+    return <Navigate to="/404" />;
+  }
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
 
   const toggleSeat = (seatId: string) => {

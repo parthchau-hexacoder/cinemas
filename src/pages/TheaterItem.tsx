@@ -1,6 +1,6 @@
 import { ArrowLeft, MapPin, Film } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, Navigate } from 'react-router-dom';
 import SeatCountModal from '../components/SeatCountModal';
 import Loader from '../components/Loader';
 import { useTheaterDetails } from '../hooks/useTheaterDetails';
@@ -14,7 +14,11 @@ export default function TheaterItem() {
   const location = useLocation();
   const currentTheater = location.state;
 
-  const { movies, shows, loading } = useTheaterDetails(theaterId);
+  const { movies, shows, loading, error } = useTheaterDetails(theaterId);
+
+  if (error) {
+    return <Navigate to="/404" />;
+  }
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedShowId, setSelectedShowId] = useState<string | null>(null);
   const [showSeatModal, setShowSeatModal] = useState(false);

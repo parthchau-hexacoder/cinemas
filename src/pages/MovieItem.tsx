@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import type { Show, Theater } from '../types';
 import SeatCountModal from '../components/SeatCountModal';
 import { ArrowLeftFromLine } from 'lucide-react';
@@ -16,8 +16,12 @@ const MovieItem = () => {
     const { movieId } = useParams<{ movieId: string }>();
     const navigate = useNavigate();
 
-    const { movie } = useMovie(movieId);
+    const { movie, error } = useMovie(movieId);
     const { shows: theaterShows, loading: showsLoading, fetchTheaterShows } = useTheaterShows(movieId);
+
+    if (error) {
+        return <Navigate to="/404" />;
+    }
 
     const [selectedDate, setSelectedDate] = useState<string>('');
     const [activeShow, setActiveShow] = useState<Show>();
