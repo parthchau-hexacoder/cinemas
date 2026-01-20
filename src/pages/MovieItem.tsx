@@ -45,6 +45,10 @@ const MovieItem = () => {
         }
     }, [theaterShows]);
 
+    useEffect(() => {
+        setActiveShow(undefined);
+    }, [selectedDate]);
+
     const availableDates = useMemo(() => {
         const dates = getAvailableDates(theaterShows);
         return dates.map(d => d.toDateString());
@@ -53,9 +57,13 @@ const MovieItem = () => {
 
     const filteredShowtimes = useMemo(() => {
         if (!selectedDate) return [];
-        return theaterShows.filter(show => {
-            return isSameDay(show.startTime, selectedDate);
-        });
+        const now = new Date();
+        return theaterShows
+            .filter(show => {
+                const showDate = new Date(show.startTime);
+                return isSameDay(show.startTime, selectedDate) && showDate > now;
+            })
+            .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
     }, [theaterShows, selectedDate]);
 
     return (

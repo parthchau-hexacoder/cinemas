@@ -37,7 +37,8 @@ export default function TheaterItem() {
     return movies.filter(movie => {
       return shows.some(show =>
         show.movieId === movie.id &&
-        new Date(show.startTime).toDateString() === selectedDate
+        new Date(show.startTime).toDateString() === selectedDate &&
+        new Date(show.startTime) > new Date()
       );
     });
   }, [movies, shows, selectedDate]);
@@ -97,12 +98,15 @@ export default function TheaterItem() {
 
         <div className="grid gap-6">
           {visibleMovies.map((movie) => {
-            const movieShows = shows.filter(
-              (s) =>
-                s.movieId === movie.id &&
-                selectedDate &&
-                isSameDay(s.startTime, selectedDate)
-            );
+            const movieShows = shows
+              .filter(
+                (s) =>
+                  s.movieId === movie.id &&
+                  selectedDate &&
+                  isSameDay(s.startTime, selectedDate) &&
+                  new Date(s.startTime) > new Date()
+              )
+              .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
 
             return (
               <MovieShowtimeCard
